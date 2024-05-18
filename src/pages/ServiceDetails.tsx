@@ -26,7 +26,7 @@ export const ServiceDetails = () => {
         <>
             <Header/>
             <div className="wrapper">
-                <h2>Дэзстанция</h2>
+                <h2>Дэзстанция </h2>
 
                 <BreadCrumbs
                     crumbs={[
