@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    color: #000000;
+    box-sizing: border-box;
+}
+
+body {
+    background: #EFEFEF;
+}
+
+.header {
+    background-color: #ff0000;
+    height: 43px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.header a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.header h1 {
+    font-size: 12px;
+    font-weight: normal;
+    color: #fff;
+}
+
+.header ul {
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.header li {
+    list-style: none;
+    padding-left: 10px;
+}
+
+.header li a {
+    text-decoration: none;
+    font-size: 12px;
+    color: #fff;
+}
+
+.search input {
+    width: 100%;
+    background-color: #c1bcbc;
+    height: 40px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #4C4141;
+    border: none;
+    padding: 0 10px;
+    margin: 0 0 16px;
+}
+
+#root {
+    width: 80%;
+    max-width: 1296px;
+    min-width: 960px;
+    margin: 0 auto;
+}
+
+.card-list {
+    display: grid;
+    gap: 24px;
+}
+
+.card {
+    border-radius: 10px;
+    background-color: #fff;
+    padding: 16px;
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    overflow: hidden;
+    flex-direction: row;
+}
+
+.card img {
+    width: 300px;
+    height: 200px;
+    object-fit: fill;
+}
+
+.media {
+    width: 300px;
+    margin-right: 20px;
+}
+
+.card .title {
+    color: #2C1D89;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.card .desc {
+    font-size: 14px;
+}
+
+.content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.control {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.control a {
+    font-size: 14px;
+}
+
+.more {
+    font-size: 18px;
+    color: #fff;
+    width: 130px;
+    height: 40px;
+    background-color: #253bc7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.wrapper {
+    padding: 16px;
+    background-color: #d9d9d9;
+    min-height: calc(100vh - 43px);
+}
+
+.wrapper h2 {
+    text-align: center;
+    font-size: 24px;
+    font-weight: normal;
+    margin-bottom: 16px;
+}
+
+.card-details {
+    height: 516px;
+}
+
+.details-title {
+    text-align: center;
+    font-size: 18px;
+    color: #2C1D89;
+    margin: 16px 0 32px;
+}
+
+.orders {
+    margin: 50px;
+    text-align: center;
+    font-size: 18px;
+}
