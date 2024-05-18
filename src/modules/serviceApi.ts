@@ -9,8 +9,11 @@ export interface IServiceResult {
 
 }
 
-export const getServiceList = async (): Promise<IServices> => {
-    return fetch('http://localhost:8000/service/').then(
+export const getServiceList = async (search: string): Promise<IServices> => {
+    const searchParam = search === ''
+        ? ''
+        : `?${new URLSearchParams({ title: search })}`;
+    return fetch(`http://localhost:8000/service/${searchParam}`).then(
         (response) => response.json()
     );
 };

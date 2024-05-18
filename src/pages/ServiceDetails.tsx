@@ -1,10 +1,10 @@
-import Header from "../Header/Header.tsx";
+import Header from "../components/Header/Header.tsx";
 import {useEffect, useState} from "react";
-import {getService, IServiceResult} from "../../modules/serviceApi.ts";
+import {getService, IServiceResult} from "../modules/serviceApi.ts";
 import {Spinner} from "react-bootstrap";
 import {useParams} from "react-router-dom";
-import {BreadCrumbs} from "../BreadCrumbs/BreadCrumbs.tsx";
-import {ServiceMock} from "../../modules/mock.ts";
+import {BreadCrumbs} from "../components/BreadCrumbs/BreadCrumbs.tsx";
+import {ServiceMock} from "../modules/mock.ts";
 
 export const ServiceDetails = () => {
     const [detail, setDetail] = useState<IServiceResult>();
