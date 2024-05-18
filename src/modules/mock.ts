@@ -5,7 +5,7 @@ export const ServiceMock: IServices = [
     {
         title: 'Обработка территории от грызунов',
         description: 'Обработка территории от грызунов 2',
-        cost: '5',
+        cost: '670',
         pk: 1,
         url: IMAGE_DEFAULT
     },
@@ -19,7 +19,7 @@ export const ServiceMock: IServices = [
     {
         title: 'Обработка территории от грызунов',
         description: 'Обработка территории от грызунов 2',
-        cost: '5',
+        cost: '20',
         pk: 3,
         url: IMAGE_DEFAULT
     }
