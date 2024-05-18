@@ -6,7 +6,7 @@ import Orders from "./pages/Orders.tsx";
 
 function App() {
     return (
-        <BrowserRouter>
+        <BrowserRouter basename="/lab4">
             <Routes>
                 <Route path={ROUTES.HOME} index element={<ServicePage />}/>
                 <Route path={`${ROUTES.DETAILS}/:id`} element={<ServiceDetails />}/>
