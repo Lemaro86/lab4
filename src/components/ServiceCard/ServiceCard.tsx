@@ -1,4 +1,5 @@
 import {IServiceResult} from "../../modules/serviceApi.ts";
+import {Link} from "react-router-dom";
 
 const ServiceCard = ({title, description, cost, pk, url}: IServiceResult) => {
     return (
@@ -13,7 +14,7 @@ const ServiceCard = ({title, description, cost, pk, url}: IServiceResult) => {
                 </div>
                 <div className="control">
                     <p className="cost"><b>{cost}</b> ₽</p>
-                    <a href={`/page/${pk}`} className="more">Подробнее</a>
+                    <Link to={`/page/${pk}`} className="more">Подробнее</Link>
                 </div>
             </div>
         </div>
