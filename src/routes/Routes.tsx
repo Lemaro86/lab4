@@ -2,6 +2,7 @@ export const ROUTES = {
     HOME: "/",
     DETAILS: "/page",
     ORDERS: "/orders",
+    ORDER: "/order",
     LOGIN: "/login",
     REGISTRATION: "/registration"
 }
@@ -11,5 +12,6 @@ export const ROUTE_LABELS: {[key in RouteKeyType]: string} = {
     DETAILS: "Услуга",
     ORDERS: " Заявки",
     LOGIN: "Вход",
-    REGISTRATION: "Регистрация"
+    REGISTRATION: "Регистрация",
+    ORDER: "Заявка"
 };

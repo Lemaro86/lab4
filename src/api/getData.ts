@@ -21,3 +21,33 @@ export const login = createAsyncThunk<User, User>('login',
         email: email,
         password: password
     }).then(({data}) => data));
+
+export const reg = createAsyncThunk<User, User>('registration',
+    async ({email, password, is_staff, is_superuser}) => api.api.apiUserCreate({
+        email: email,
+        password: password,
+        is_superuser: is_superuser,
+        is_staff: is_staff
+    }).then(({data}) => data));
+
+export const getOrder = createAsyncThunk<Order, Order>('getOrder',
+    async (order_id) => api.order.orderRead(String(order_id), {
+        withCredentials: true,
+        headers: {
+            'X-CSRFToken': document.cookie
+                .split('; ')
+                .filter(row => row.startsWith('csrftoken='))
+                .map(c => c.split('=')[1])[0],
+        },
+    }).then(({data}) => data));
+
+export const getUserById = createAsyncThunk<any,any>('getUserById',
+    async (id) => api.api.apiUserRead(id, {
+        withCredentials: true,
+        headers: {
+            'X-CSRFToken': document.cookie
+                .split('; ')
+                .filter(row => row.startsWith('csrftoken='))
+                .map(c => c.split('=')[1])[0],
+        },
+    }).then(({data})=>data))

@@ -1,0 +1,17 @@
+.head-1 {
+    margin-bottom: 20px;
+}
+
+.control-panel {
+    margin-top: 40px;
+    display: block;
+}
+
+.status-style {
+    margin-bottom: 20px;
+}
+
+.del-button {
+    margin-top: 10px;
+    display: block !important;
+}

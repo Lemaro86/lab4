@@ -8,11 +8,13 @@ import {useNavigate} from "react-router-dom";
 import {OrdersTable} from "../components/OrdersTable/OrdersTable.tsx";
 import Table from "react-bootstrap/Table";
 import {Spinner} from "react-bootstrap";
+import {useUserData} from "../store/data/userSlice.ts";
 
 const Orders = () => {
     const dispatch = useAppDispatch();
-    const {list, error, loading } = useAppSelector(useData);
+    const {list, error, loading} = useAppSelector(useData);
     const navigate = useNavigate();
+    const userInfo = useAppSelector(useUserData);
 
     useEffect(() => {
         dispatch(getOrderList());
@@ -23,6 +25,12 @@ const Orders = () => {
             return navigate('/login')
         }
     }, [error]);
+
+    useEffect(() => {
+        if (!userInfo?.isAuthorized){
+            navigate('/login');
+        }
+    }, [userInfo]);
 
     return (
         <>
@@ -35,26 +43,28 @@ const Orders = () => {
                     <Spinner animation="border"/>
                 </div>}
 
-                {!loading && <Table striped bordered hover>
-                    <thead>
-                    <tr>
-                        <th style={{width: '277px'}}>Дата создания</th>
-                        <th>Статус</th>
-                        <th>Создатель</th>
-                        <th>Модератор</th>
-                        <th>Дата активации</th>
-                        <th>Дата завершения</th>
-                        <th>Подробнее</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {list.map((item, index) => (
-                        <tr key={index}>
-                            <OrdersTable {...item} />
+                {!loading && (
+                    <Table striped bordered hover>
+                        <thead>
+                        <tr>
+                            <th style={{width: '277px'}}>Дата создания</th>
+                            <th>Статус</th>
+                            <th>Создатель</th>
+                            <th>Модератор</th>
+                            <th>Дата активации</th>
+                            <th>Дата завершения</th>
+                            <th>Подробнее</th>
                         </tr>
-                    ))}
-                    </tbody>
-                </Table>}
+                        </thead>
+                        <tbody>
+                        {list.map((item, index) => (
+                            <tr key={index}>
+                                <OrdersTable {...item} />
+                            </tr>
+                        ))}
+                        </tbody>
+                    </Table>
+                )}
             </div>
         </>
     )

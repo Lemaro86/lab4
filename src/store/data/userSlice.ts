@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit"
 import {User} from "../../api/Api.ts";
-import {login} from "../../api/getData.ts";
+import {login, reg} from "../../api/getData.ts";
 
 type InitState = {
     isAuthorized: boolean;
@@ -9,6 +9,8 @@ type InitState = {
     success: boolean;
     isStaff?: boolean;
     isSuperuser?: boolean
+    isRegistered?: boolean;
+    regError?: boolean;
 }
 
 const initialState: InitState = {
@@ -17,7 +19,9 @@ const initialState: InitState = {
     error: false,
     success: false,
     isStaff: false,
-    isSuperuser: false
+    isSuperuser: false,
+    isRegistered: false,
+    regError: false
 }
 
 export const userSlice = createSlice({
@@ -50,6 +54,13 @@ export const userSlice = createSlice({
                 state.error = true;
                 state.success = false;
                 state.status = 'error';
+            })
+            .addCase(reg.fulfilled, (state) => {
+                state.isRegistered = true
+                state.regError = false
+            })
+            .addCase(reg.rejected, (state) => {
+                state.regError = true
             });
     }
 });

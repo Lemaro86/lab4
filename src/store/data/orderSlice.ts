@@ -1,19 +1,21 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit"
 import {Order} from "../../api/Api.ts";
-import {getOrderList} from "../../api/getData.ts";
+import {getOrder, getOrderList} from "../../api/getData.ts";
 
 type InitState = {
     list: Order[];
     status: string;
     error: boolean;
     loading: boolean;
+    item?: Order;
 }
 
 const initialState: InitState = {
     list: [],
     status: 'idle',
     error: false,
-    loading: false
+    loading: false,
+    item: undefined,
 }
 
 export const orderSlice = createSlice({
@@ -22,6 +24,9 @@ export const orderSlice = createSlice({
     reducers: {
         setData(state, action: PayloadAction<Order[]>) {  // изменяем состояние на полученные данные
             state.list = action.payload
+        },
+        leaveOrder(state){
+            state.item = undefined
         }
     },
     selectors: {
@@ -42,11 +47,13 @@ export const orderSlice = createSlice({
             .addCase(getOrderList.rejected, (state) => {
                 state.error = true;
                 state.loading = false;
-            });
+            }).addCase(getOrder.fulfilled, (state, action)=>{
+                state.item = action.payload
+        });
     }
 });
 
 
-export const {setData: setDataAction} = orderSlice.actions;
+export const {setData: setDataAction, leaveOrder} = orderSlice.actions;
 
 export const {useData} = orderSlice.selectors;
