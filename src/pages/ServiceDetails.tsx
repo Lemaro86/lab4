@@ -1,7 +1,7 @@
 import Header from "../components/Header/Header.tsx";
 import {useEffect, useState} from "react";
 import {getService, IServiceResult} from "../modules/serviceApi.ts";
-import {Spinner} from "react-bootstrap";
+import {Button, Spinner} from "react-bootstrap";
 import {useParams} from "react-router-dom";
 import {BreadCrumbs} from "../components/BreadCrumbs/BreadCrumbs.tsx";
 import {ServiceMock} from "../modules/mock.ts";
@@ -22,6 +22,10 @@ export const ServiceDetails = () => {
         })
     }, [id]);
 
+    const handleOrder = () => {
+        console.log(12);
+    }
+
     return (
         <>
             <Header/>
@@ -30,7 +34,7 @@ export const ServiceDetails = () => {
 
                 <BreadCrumbs
                     crumbs={[
-                        { label: detail?.title || "Услуга" },
+                        {label: detail?.title || "Услуга"},
                     ]}
                 />
 
@@ -52,7 +56,7 @@ export const ServiceDetails = () => {
                             </div>
                             <div className="control">
                                 <p className="cost"><b>{detail.cost}</b> ₽</p>
-                                <a href="/page/" className="more">Подробнее</a>
+                                <Button onClick={handleOrder} className="more">Заказать</Button>
                             </div>
 
                         </div>

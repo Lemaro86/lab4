@@ -150,7 +150,9 @@ body {
 }
 
 .card-details {
-    height: 516px;
+    /*height: 516px !important;*/
+    display: flex !important;
+    flex-direction: row !important;
 }
 
 .details-title {

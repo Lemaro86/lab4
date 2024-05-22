@@ -1,8 +1,8 @@
-import {IServiceResult} from "../../modules/serviceApi.ts";
 import {Link} from "react-router-dom";
 import {IMAGE_DEFAULT} from "../../constants/common.ts";
+import {Service} from "../../api/Api.ts";
 
-const ServiceCard = ({title, description, cost, pk, url}: IServiceResult) => {
+const ServiceCard = ({title, description, cost, pk, url}: Service) => {
     return (
         <div className="card">
             <div className="media">
