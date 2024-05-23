@@ -24,6 +24,8 @@ export const login = createAsyncThunk<User, User>('login',
     async ({email, password}) => api.login.loginCreate({
         email: email,
         password: password
+    }, {
+        withCredentials: true,
     }).then(({data}) => data));
 
 export const reg = createAsyncThunk<User, User>('registration',
@@ -79,4 +81,6 @@ export const deleteOrder = createAsyncThunk<any, any>('deleteOrder',
     }).then(({data}) => data));
 
 export const logout = createAsyncThunk<any>('logout',
-    async () => api.logout.logoutList().then(({data}) => data));
+    async () => api.logout.logoutList({
+        withCredentials: true
+    }).then(({data}) => data));
