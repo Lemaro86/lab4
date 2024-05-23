@@ -107,9 +107,6 @@ export interface Service {
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, ResponseType } from "axios";
 import axios from "axios";
 
-axios.defaults.xsrfHeaderName = "X-CSRFToken";
-axios.defaults.xsrfCookieName = "csrftoken";
-
 export type QueryParamsType = Record<string | number, any>;
 
 export interface FullRequestParams extends Omit<AxiosRequestConfig, "data" | "params" | "url" | "responseType"> {
@@ -432,11 +429,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request PUT:/order/{id}/
      * @secure
      */
-    orderUpdate: (id: string, params: RequestParams = {}) =>
+    orderUpdate: (id: string, data: Order, params: RequestParams = {}) =>
       this.request<Order, any>({
         path: `/order/${id}/`,
         method: "PUT",
+        body: data,
         secure: true,
+        type: ContentType.Json,
         format: "json",
         ...params,
       }),

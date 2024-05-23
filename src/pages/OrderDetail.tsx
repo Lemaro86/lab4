@@ -2,7 +2,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import {useAppDispatch, useAppSelector} from "../store/store.ts";
 import {useEffect, useState} from "react";
-import {getOrder, getUserById} from "../api/getData.ts";
+import {deleteOrder, getOrder, getUserById, updateOrderById} from "../api/getData.ts";
 import {useNavigate, useParams} from "react-router-dom";
 import Header from "../components/Header/Header.tsx";
 import {BreadCrumbs} from "../components/BreadCrumbs/BreadCrumbs.tsx";
@@ -52,10 +52,28 @@ export const OrderDetail = () => {
     }, [item]);
 
     useEffect(() => {
-        if (!userInfo?.isAuthorized){
+        if (!userInfo?.isAuthorized) {
             navigate('/login');
         }
     }, [userInfo]);
+
+    const handleControl = async (status: string) => {
+        if (id) {
+            dispatch(updateOrderById({
+                id: id,
+                data: {
+                    order_id: Number(id),
+                    status
+                }
+            })).then(() => {
+                dispatch(getOrder(id as unknown as any));
+            });
+        }
+    }
+
+    const deleteOrderById = () => {
+        dispatch(deleteOrder(id)).then(() => navigate('/orders'));
+    }
 
     return (
         <>
@@ -68,8 +86,10 @@ export const OrderDetail = () => {
                         <Card.Body>
                             <Card.Title className='status-style'>Статус
                                 заявки: {getStatus(item.status as unknown as any)}</Card.Title>
-                            {(userInfo.isStaff || userInfo.isSuperuser) && creator && <Card.Text>Создатель: {creator?.email}</Card.Text>}
-                            {(userInfo.isStaff || userInfo.isSuperuser) && moderator && <Card.Text>Модератор: {moderator?.email}</Card.Text>}
+                            {(userInfo.isStaff || userInfo.isSuperuser) && creator &&
+                                <Card.Text>Создатель: {creator?.email}</Card.Text>}
+                            {(userInfo.isStaff || userInfo.isSuperuser) && moderator &&
+                                <Card.Text>Модератор: {moderator?.email}</Card.Text>}
                             {item.created && (
                                 <Card.Text>
                                     Создана: {format(new Date(item.created), 'dd.MM.yyyy HH:mm')}
@@ -87,11 +107,16 @@ export const OrderDetail = () => {
                             )}
                             {(userInfo.isStaff || userInfo.isSuperuser) && (
                                 <div className='control-panel'>
-                                    {item.status === "created" && <Button variant="primary" className='del-button'>Активировать</Button>}
-                                    {item.status === "activated" && <Button variant="success" className='del-button'>Завершить</Button>}
+                                    {item.status === "created" && <Button variant="primary" className='del-button'
+                                                                          onClick={() => handleControl('activated')}>Активировать</Button>}
+                                    {item.status === "activated" &&
+                                        <Button variant="success" className='del-button'
+                                                onClick={() => handleControl('completed')}>Завершить</Button>}
                                     {item.status === "activated" || item.status === "created" &&
-                                        <Button variant="danger" className='del-button'>Отклонить</Button>}
-                                    <Button variant="danger" className='del-button'>Удалить</Button>
+                                        <Button variant="danger" className='del-button'
+                                                onClick={() => handleControl('declined')}>Отклонить</Button>}
+                                    <Button variant="danger" className='del-button'
+                                            onClick={deleteOrderById}>Удалить</Button>
                                 </div>
                             )}
                         </Card.Body>
