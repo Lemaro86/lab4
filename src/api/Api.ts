@@ -370,6 +370,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         ...params,
       }),
   };
+  logout = {
+    /**
+     * No description
+     *
+     * @tags logout
+     * @name LogoutList
+     * @request GET:/logout/
+     * @secure
+     */
+    logoutList: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/logout/`,
+        method: "GET",
+        secure: true,
+        ...params,
+      }),
+  };
   order = {
     /**
      * No description

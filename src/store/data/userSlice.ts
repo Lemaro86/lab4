@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit"
 import {User} from "../../api/Api.ts";
-import {login, reg} from "../../api/getData.ts";
+import {login, logout, reg} from "../../api/getData.ts";
 
 type InitState = {
     isAuthorized: boolean;
@@ -56,11 +56,14 @@ export const userSlice = createSlice({
                 state.status = 'error';
             })
             .addCase(reg.fulfilled, (state) => {
-                state.isRegistered = true
-                state.regError = false
+                state.isRegistered = true;
+                state.regError = false;
             })
             .addCase(reg.rejected, (state) => {
-                state.regError = true
+                state.regError = true;
+            })
+            .addCase(logout.fulfilled, (state)=>{
+                state.isAuthorized = false;
             });
     }
 });

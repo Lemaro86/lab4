@@ -77,3 +77,6 @@ export const deleteOrder = createAsyncThunk<any, any>('deleteOrder',
                 .map(c => c.split('=')[1])[0],
         },
     }).then(({data}) => data));
+
+export const logout = createAsyncThunk<any>('logout',
+    async () => api.logout.logoutList().then(({data}) => data));
