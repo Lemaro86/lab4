@@ -24,7 +24,7 @@ export const OrdersTable = (data: Order) => {
             <td>{data.moderator_id}</td>
             <td>{data.activated && format(new Date(data.activated), 'dd.MM.yyyy HH:mm')}</td>
             <td>{data.completed && format(new Date(data.completed), 'dd.MM.yyyy HH:mm')}</td>
-            <td><Link to={`/order/${data.order_id}`}>Открыть</Link></td>
+            <td><Link to={`/order/${data.pk}`}>Открыть</Link></td>
         </>
     )
 }

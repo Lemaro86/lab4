@@ -36,12 +36,8 @@ export interface User {
 }
 
 export interface Order {
-  /**
-   * Order id
-   * @min -2147483648
-   * @max 2147483647
-   */
-  order_id: number;
+  /** ID */
+  pk?: number;
   /**
    * Статус заявки
    * @minLength 1
@@ -106,6 +102,9 @@ export interface Service {
 
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, ResponseType } from "axios";
 import axios from "axios";
+
+axios.defaults.xsrfHeaderName = "X-CSRF-TOKEN";
+axios.defaults.xsrfCookieName = "csrftoken";
 
 export type QueryParamsType = Record<string | number, any>;
 
@@ -413,11 +412,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/order/
      * @secure
      */
-    orderCreate: (params: RequestParams = {}) =>
-      this.request<void, any>({
+    orderCreate: (
+      data: {
+        /** ACTIVATED DRAFT COMPLETED DECLINED DELETED */
+        status?: string;
+        /** Primary key of service */
+        service_id?: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<Order[], any>({
         path: `/order/`,
         method: "POST",
+        body: data,
         secure: true,
+        type: ContentType.Json,
+        format: "json",
         ...params,
       }),
 

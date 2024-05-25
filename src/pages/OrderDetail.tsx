@@ -62,7 +62,7 @@ export const OrderDetail = () => {
             dispatch(updateOrderById({
                 id: id,
                 data: {
-                    order_id: Number(id),
+                    pk: Number(id),
                     status
                 }
             })).then(() => {

@@ -5,11 +5,14 @@ import {Button, Spinner} from "react-bootstrap";
 import {useParams} from "react-router-dom";
 import {BreadCrumbs} from "../components/BreadCrumbs/BreadCrumbs.tsx";
 import {ServiceMock} from "../modules/mock.ts";
+import {useAppDispatch} from "../store/store.ts";
+import {addOrder} from "../api/getData.ts";
 
 export const ServiceDetails = () => {
     const [detail, setDetail] = useState<IServiceResult>();
     const [loading, setLoading] = useState<boolean>(true);
     const {id} = useParams();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         if (!id) return;
@@ -23,7 +26,13 @@ export const ServiceDetails = () => {
     }, [id]);
 
     const handleOrder = () => {
-        console.log(12);
+        const data = {
+            data: {
+                status: 'DRAFT',
+                service_id: Number(id)
+            }
+        }
+        dispatch(addOrder(data));
     }
 
     return (

@@ -6,6 +6,14 @@ export type OrderRequest = {
     id: string;
     data: Order;
 }
+
+export type IAddOrder = {
+    data: {
+        status?: string;
+        service_id?: number;
+    }
+}
+
 export const getServiceList = createAsyncThunk<Service[]>('ServiceList',
     async () => api.service.serviceList().then(({data}) => data));
 
@@ -84,3 +92,18 @@ export const logout = createAsyncThunk<any>('logout',
     async () => api.logout.logoutList({
         withCredentials: true
     }).then(({data}) => data));
+
+export const addOrder = createAsyncThunk<any, IAddOrder>('addOrder',
+    async (data: IAddOrder) => api.order.orderCreate(
+        {
+            status: data.data.status,
+            service_id: data.data.service_id
+        }, {
+            withCredentials: true,
+            headers: {
+                'X-CSRFToken': document.cookie
+                    .split('; ')
+                    .filter(row => row.startsWith('csrftoken='))
+                    .map(c => c.split('=')[1])[0],
+            },
+        }).then(({data}) => data))
