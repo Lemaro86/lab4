@@ -2,7 +2,7 @@ import Header from "../components/Header/Header.tsx";
 import {useEffect, useState} from "react";
 import {getService, IServiceResult} from "../modules/serviceApi.ts";
 import {Button, Spinner} from "react-bootstrap";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {BreadCrumbs} from "../components/BreadCrumbs/BreadCrumbs.tsx";
 import {ServiceMock} from "../modules/mock.ts";
 import {useAppDispatch} from "../store/store.ts";
@@ -13,6 +13,7 @@ export const ServiceDetails = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const {id} = useParams();
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!id) return;
@@ -32,7 +33,11 @@ export const ServiceDetails = () => {
                 service_id: Number(id)
             }
         }
-        dispatch(addOrder(data));
+        dispatch(addOrder(data)).unwrap().then((res) => {
+            if (res) {
+                navigate('/orders');
+            }
+        });
     }
 
     return (

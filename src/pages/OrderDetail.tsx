@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card';
 import {useAppDispatch, useAppSelector} from "../store/store.ts";
 import {useEffect, useState} from "react";
 import {deleteOrder, getOrder, getUserById, updateOrderById} from "../api/getData.ts";
-import {useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import Header from "../components/Header/Header.tsx";
 import {BreadCrumbs} from "../components/BreadCrumbs/BreadCrumbs.tsx";
 import {leaveOrder, useData} from "../store/data/orderSlice.ts";
@@ -81,6 +81,14 @@ export const OrderDetail = () => {
             <div className="wrapper">
                 <BreadCrumbs crumbs={[{label: 'Список заявок', path: '/orders'}, {label: "Заявка"}]}/>
                 <h1 className='head-1'>Страница заявки</h1>
+                {item?.service?.length && item?.service?.length > 0 && item.service.map((elem, index) => (
+                    <Card style={{width: '25rem'}} key={index}>
+                        <Card.Body>
+                            <Card.Title className='status-style'><Link to={`/page/${elem.pk}`}>Перейти в
+                                услугу</Link></Card.Title>
+                        </Card.Body>
+                    </Card>
+                ))}
                 {item && (
                     <Card style={{width: '25rem'}}>
                         <Card.Body>

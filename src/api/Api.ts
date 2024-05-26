@@ -35,6 +35,11 @@ export interface User {
   is_superuser?: boolean;
 }
 
+export interface ServiceShort {
+  /** ID */
+  pk?: number;
+}
+
 export interface Order {
   /** ID */
   pk?: number;
@@ -71,6 +76,7 @@ export interface Order {
    * @max 2147483647
    */
   moderator_id?: number | null;
+  service?: ServiceShort[];
 }
 
 export interface Service {
@@ -421,7 +427,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<Order[], any>({
+      this.request<Order, any>({
         path: `/order/`,
         method: "POST",
         body: data,

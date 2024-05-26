@@ -1,20 +1,24 @@
 import {Order} from "../../api/Api.ts";
 import {format} from "date-fns";
-import './OrdersTables.css'
 import {Link} from "react-router-dom";
+import {useAppSelector} from "../../store/store.ts";
+import {useUserData} from "../../store/data/userSlice.ts";
 
-export const getStatus = (status: 'created' | 'activated' | 'declined' | 'completed') => {
+import './OrdersTables.css'
+
+export const getStatus = (status: 'DRAFT' | 'activated' | 'declined' | 'completed') => {
     const statuses = {
-        created: 'Создана',
         activated: 'Активна',
         declined: 'Отклонена',
-        completed: 'Завершена'
+        completed: 'Завершена',
+        DRAFT: 'Черновик'
     }
 
     return statuses[status]
 }
 
 export const OrdersTable = (data: Order) => {
+    const userInfo = useAppSelector(useUserData);
 
     return (
         <>
@@ -24,7 +28,7 @@ export const OrdersTable = (data: Order) => {
             <td>{data.moderator_id}</td>
             <td>{data.activated && format(new Date(data.activated), 'dd.MM.yyyy HH:mm')}</td>
             <td>{data.completed && format(new Date(data.completed), 'dd.MM.yyyy HH:mm')}</td>
-            <td><Link to={`/order/${data.pk}`}>Открыть</Link></td>
+            <td>{(userInfo.isStaff || userInfo.isSuperuser) ? <Link to={`/order/${data.pk}`}>Открыть</Link> : '-'}</td>
         </>
     )
 }
