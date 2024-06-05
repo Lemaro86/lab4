@@ -43,7 +43,7 @@ const ServicePage = () => {
             <Header/>
 
             <div className="wrapper">
-                <h2>Дэзстанция </h2>
+                <h2>Дэзстанция 1 </h2>
 
                 <InputField
                     value={searchValue}
