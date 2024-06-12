@@ -75,6 +75,8 @@ export const OrderDetail = () => {
         dispatch(deleteOrder(id)).then(() => navigate('/orders'));
     }
 
+    console.log(userInfo)
+
     return (
         <>
             <Header/>
@@ -115,7 +117,7 @@ export const OrderDetail = () => {
                             )}
                             {(userInfo.isStaff || userInfo.isSuperuser) && (
                                 <div className='control-panel'>
-                                    {item.status === "created" && <Button variant="primary" className='del-button'
+                                    {(item.status === "DRAFT" || item.status === "created") && <Button variant="primary" className='del-button'
                                                                           onClick={() => handleControl('activated')}>Активировать</Button>}
                                     {item.status === "activated" &&
                                         <Button variant="success" className='del-button'
