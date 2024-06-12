@@ -13,16 +13,18 @@ const Registration = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [is_superuser, setIs_superuser] = useState(false);
+    const [is_staff, setIs_staff] = useState(false);
     const userInfo = useAppSelector(useUserData);
     const navigate = useNavigate();
 
     const handleSubmit = () => {
-        const data = {email, password, is_stuff: !is_superuser, is_superuser: is_superuser}
+        const data = {email, password, is_staff: is_staff, is_superuser: is_superuser}
         dispatch(reg(data));
     }
 
     const handleRadio = (e: React.ChangeEvent<HTMLInputElement>) => {
         setIs_superuser(e.target.id === 'super');
+        setIs_staff(e.target.id === 'staff');
     }
 
     const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
