@@ -1,7 +1,15 @@
 import {Service} from "../../api/Api.ts";
+import {getServiceList, removeService} from "../../api/getData.ts";
+import {useAppDispatch} from "../../store/store.ts";
 
-export const ServiceTable = ({pk, title, description, cost, url}: Service) => {
-    console.log(123, pk, title, description, cost, url);
+export const ServiceTable = ({pk, title, description, cost}: Service) => {
+    const dispatch = useAppDispatch();
+
+    const deleteService = () => {
+        dispatch(removeService({id: String(pk)}))
+            .unwrap()
+            .then(() => dispatch(getServiceList()))
+    }
 
     return (
         <>
@@ -15,7 +23,7 @@ export const ServiceTable = ({pk, title, description, cost, url}: Service) => {
                 <button className='edit-btn'>редактировать</button>
             </td>
             <td>
-                <button className='remove-btn'>удалить</button>
+                <button className='remove-btn' onClick={deleteService}>удалить</button>
             </td>
         </>
     )

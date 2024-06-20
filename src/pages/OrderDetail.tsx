@@ -21,6 +21,7 @@ export const OrderDetail = () => {
     const [creator, setCreator] = useState<User>();
     const [moderator, setModerator] = useState<User>();
     const navigate = useNavigate();
+    const [error,setError] = useState('');
 
     const getUser = async () => {
         dispatch(getUserById(item?.creator_id || 0)).unwrap().then((data) => {
@@ -35,7 +36,10 @@ export const OrderDetail = () => {
     }
 
     useEffect(() => {
-        dispatch(getOrder(id as unknown as any))
+        dispatch(getOrder(id as unknown as any)).unwrap().catch((err) => {
+            console.log('err', err)
+            setError(`Ошибка запроса: ${err.message}`);
+        });
 
         return () => {
             dispatch(leaveOrder());
@@ -75,14 +79,15 @@ export const OrderDetail = () => {
         dispatch(deleteOrder(id)).then(() => navigate('/orders'));
     }
 
-    console.log(userInfo)
-
     return (
         <>
             <Header/>
             <div className="wrapper">
                 <BreadCrumbs crumbs={[{label: 'Список заявок', path: '/orders'}, {label: "Заявка"}]}/>
                 <h1 className='head-1'>Страница заявки</h1>
+
+                {error !== '' && <div className='error-server'>{error}</div>}
+
                 {item?.service?.length && item?.service?.length > 0 && item.service.map((elem, index) => (
                     <Card style={{width: '25rem'}} key={index}>
                         <Card.Body>

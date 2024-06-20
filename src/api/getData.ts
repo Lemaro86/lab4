@@ -22,6 +22,10 @@ export type IServiceAdd = {
     pic?: File;
 }
 
+export type IRemoveService = {
+    id: string;
+}
+
 export const getServiceList = createAsyncThunk<Service[]>('ServiceList',
     async () => api.service.serviceList().then(({data}) => data));
 
@@ -114,7 +118,7 @@ export const addOrder = createAsyncThunk<any, IAddOrder>('addOrder',
                     .filter(row => row.startsWith('csrftoken='))
                     .map(c => c.split('=')[1])[0],
             },
-        }).then(({data}) => data))
+        }).then(({data}) => data));
 
 export const addService = createAsyncThunk<any, IServiceAdd>('addService', async (data: Service) => api.service.serviceCreate(data, {
     withCredentials: true,
@@ -123,4 +127,13 @@ export const addService = createAsyncThunk<any, IServiceAdd>('addService', async
             .split('; ')
             .filter(row => row.startsWith('csrftoken='))
             .map(c => c.split('=')[1])[0],
-    }}).then(({data}) => data))
+    }}).then(({data}) => data));
+
+export const removeService = createAsyncThunk<any, IRemoveService>('removeService', async (id: IRemoveService) => api.service.serviceDelete(id.id, {
+    withCredentials: true,
+    headers: {
+        'X-CSRFToken': document.cookie
+            .split('; ')
+            .filter(row => row.startsWith('csrftoken='))
+            .map(c => c.split('=')[1])[0],
+    }}).then(({data}) => data));

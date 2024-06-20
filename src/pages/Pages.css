@@ -15,3 +15,12 @@
     margin-top: 10px;
     display: block !important;
 }
+
+.error-server, .error-server div {
+    color: #ff0000;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 10px 15px;
+    margin: 10px 0;
+}

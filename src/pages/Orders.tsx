@@ -2,35 +2,23 @@ import {BreadCrumbs} from "../components/BreadCrumbs/BreadCrumbs.tsx";
 import Header from "../components/Header/Header.tsx";
 import {useAppDispatch, useAppSelector} from "../store/store.ts";
 import {useData} from "../store/data/orderSlice.ts";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {getOrderList} from "../api/getData.ts";
-import {useNavigate} from "react-router-dom";
 import {OrdersTable} from "../components/OrdersTable/OrdersTable.tsx";
 import Table from "react-bootstrap/Table";
 import {Spinner} from "react-bootstrap";
-import {useUserData} from "../store/data/userSlice.ts";
+import {Link} from "react-router-dom";
 
 const Orders = () => {
     const dispatch = useAppDispatch();
-    const {list, error, loading} = useAppSelector(useData);
-    const navigate = useNavigate();
-    const userInfo = useAppSelector(useUserData);
+    const {list, loading} = useAppSelector(useData);
+    const [errors, setErrors] = useState('');
 
     useEffect(() => {
-        dispatch(getOrderList());
+        dispatch(getOrderList()).unwrap().catch(err => {
+            setErrors(`Ошибка запроса: ${err.message}`);
+        });
     }, [dispatch]);
-
-    useEffect(() => {
-        if (error) {
-            return navigate('/login')
-        }
-    }, [error]);
-
-    useEffect(() => {
-        if (!userInfo?.isAuthorized){
-            navigate('/login');
-        }
-    }, [userInfo]);
 
     return (
         <>
@@ -43,7 +31,12 @@ const Orders = () => {
                     <Spinner animation="border"/>
                 </div>}
 
-                {!loading && (
+                {errors !== '' && <div className='error-server'>
+                    <div>{errors}</div>
+                    <div>Если вы не авторизованы, попробуйте <Link to={'/login'}>войти</Link></div>
+                </div>}
+
+                {!loading && errors === '' && (
                     <Table striped bordered hover>
                         <thead>
                         <tr>

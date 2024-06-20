@@ -1,6 +1,6 @@
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import {Link,} from "react-router-dom";
+import {Link, useNavigate,} from "react-router-dom";
 import {useState} from "react";
 import Header from "../components/Header/Header.tsx";
 import {addService} from "../api/getData.ts";
@@ -15,10 +15,17 @@ export const ServiceAdd = () => {
     const [desc, setDesc] = useState('');
     const [cost, setCost] = useState('');
     const [pic, setPic] = useState<File>();
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
+    const [error, setError] = useState('');
 
     const submit = () => {
-        dispatch(addService({pk: Number(pk), title, description: desc, cost, pic}));
+        dispatch(addService({pk: Number(pk), title, description: desc, cost, pic}))
+            .unwrap()
+            .then(() => navigate('/service'))
+            .catch((err) => {
+                setError(`Ошибка запроса: ${err.message}`);
+            });
+        ;
     }
 
     const handlePK = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,6 +76,13 @@ export const ServiceAdd = () => {
                         <Form.Label>Добавьте изображение</Form.Label>
                         <Form.Control type="file" onChange={handleImg}/>
                     </Form.Group>
+
+                    {error !== '' && (
+                        <div className='error-server'>
+                            <div>{error}</div>
+                            <div>Если вы не авторизованы, попробуйте <Link to={'/login'}>войти</Link></div>
+                        </div>
+                    )}
 
                     <Button className='add-btn-submit' variant="primary" onClick={submit}>Добавить</Button>
                     <h4>
