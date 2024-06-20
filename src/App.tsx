@@ -6,6 +6,8 @@ import Orders from "./pages/Orders.tsx";
 import Login from "./components/Auth/Login.tsx";
 import Registration from "./components/Auth/Registration.tsx";
 import {OrderDetail} from "./pages/OrderDetail.tsx";
+import {ServiceEdit} from "./pages/ServiceEdit.tsx";
+import {ServiceAdd} from "./pages/ServiceAdd.tsx";
 
 function App() {
     return (
@@ -17,6 +19,8 @@ function App() {
                 <Route path={`${ROUTES.ORDER}/:id`} element={<OrderDetail />}/>
                 <Route path={ROUTES.LOGIN} element={<Login/>}/>
                 <Route path={ROUTES.REGISTRATION} element={<Registration/>}/>
+                <Route path={ROUTES.SERVICE} element={<ServiceEdit/>}/>
+                <Route path={ROUTES.ADD_SERVICE} element={<ServiceAdd/>}/>
             </Routes>
         </BrowserRouter>
     );

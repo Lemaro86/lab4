@@ -20,7 +20,7 @@ export interface User {
   /**
    * Пароль
    * @minLength 1
-   * @maxLength 50
+   * @maxLength 255
    */
   password: string;
   /**
@@ -108,9 +108,6 @@ export interface Service {
 
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, ResponseType } from "axios";
 import axios from "axios";
-
-axios.defaults.xsrfHeaderName = "X-CSRF-TOKEN";
-axios.defaults.xsrfCookieName = "csrftoken";
 
 export type QueryParamsType = Record<string | number, any>;
 
@@ -515,12 +512,30 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/service/
      * @secure
      */
-    serviceCreate: (data: Service, params: RequestParams = {}) =>
+    serviceCreate: (
+      data: {
+        /** Primary key? */
+        pk?: number;
+        /** Name of service */
+        title?: string;
+        /** Desc of service */
+        description?: string;
+        /** Just price */
+        cost?: string;
+        /**
+         * Image
+         * @format binary
+         */
+        pic?: File;
+      },
+      params: RequestParams = {},
+    ) =>
       this.request<Service, any>({
         path: `/service/`,
         method: "POST",
         body: data,
         secure: true,
+        type: ContentType.FormData,
         format: "json",
         ...params,
       }),
@@ -555,6 +570,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         method: "PUT",
         body: data,
         secure: true,
+        type: ContentType.Json,
         format: "json",
         ...params,
       }),

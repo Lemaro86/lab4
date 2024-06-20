@@ -180,3 +180,54 @@ body {
     justify-content: center;
     z-index: 5;
 }
+
+.desc-short {
+    max-height: 45px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.add-btn,
+.edit-btn,
+.remove-btn {
+    color: #fff;
+    height: 40px;
+    background-color: #253bc7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.add-btn:hover {
+    opacity: .9;
+}
+
+.add-btn {
+    font-size: 18px;
+    float: right;
+    margin-bottom: 20px;
+    width: 230px;
+}
+
+.edit-btn {
+    background-color: #a18809;
+    font-size: 12px;
+    width: 125px;
+}
+
+.remove-btn {
+    background-color: #da2417;
+    font-size: 12px;
+    width: 105px;
+}
+
+.loginWrapper {
+    width: 500px;
+    margin: 140px auto;
+}
+
+.add-btn-submit {
+    margin: 40px 0 100px;
+}

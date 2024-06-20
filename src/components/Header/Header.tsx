@@ -15,6 +15,7 @@ const Header = () => {
         <div className="header">
             <h1><Link to="/">Станция дэзинфекции</Link></h1>
             <ul>
+                {data?.isStaff && <li><Link to="/service">Админка</Link></li>}
                 <li><Link to="/">Услуги</Link></li>
                 <li><Link to="/orders">Заявки</Link></li>
                 <li>

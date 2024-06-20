@@ -14,6 +14,14 @@ export type IAddOrder = {
     }
 }
 
+export type IServiceAdd = {
+    pk?: number;
+    title?: string;
+    description?: string;
+    cost?: string;
+    pic?: File;
+}
+
 export const getServiceList = createAsyncThunk<Service[]>('ServiceList',
     async () => api.service.serviceList().then(({data}) => data));
 
@@ -107,3 +115,12 @@ export const addOrder = createAsyncThunk<any, IAddOrder>('addOrder',
                     .map(c => c.split('=')[1])[0],
             },
         }).then(({data}) => data))
+
+export const addService = createAsyncThunk<any, IServiceAdd>('addService', async (data: Service) => api.service.serviceCreate(data, {
+    withCredentials: true,
+    headers: {
+        'X-CSRFToken': document.cookie
+            .split('; ')
+            .filter(row => row.startsWith('csrftoken='))
+            .map(c => c.split('=')[1])[0],
+    }}).then(({data}) => data))
